@@ -25,6 +25,7 @@ model_options = {
 
 selected_display = st.selectbox("Choose model", list(model_options.keys()), index=0)
 model_name = model_options[selected_display]
+
     temperature = st.slider("Temperature", 0.0, 1.0, 0.7, 0.05)
     st.markdown("---")
     if st.button("Clear Chat"):
