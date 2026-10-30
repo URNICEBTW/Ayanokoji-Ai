@@ -8,31 +8,34 @@ st.set_page_config(
     layout="centered"
 )
 
-# Sidebar - API Key
+# Sidebar - API Key & Settings
 with st.sidebar:
     st.title("⚙️ Settings")
     api_key = st.text_input("Gemini API Key", type="password", placeholder="Paste your API key here")
+    
     st.markdown("---")
     st.markdown("**Model**")
-model_options = {
-    "Gemini 3.8 Flash (Newest)": "gemini-3.8-flash",
-    "Gemini 3.6 Flash": "gemini-3.6-flash",
-    "Gemini 3.5 Flash-Lite": "gemini-3.5-flash-lite",
-    "Gemini 3.1 Flash-Lite": "gemini-3.1-flash-lite",
-    "Gemini 3 Flash Preview": "gemini-3-flash-preview",
-    "Gemini 2.0 Flash": "gemini-2.0-flash",
-}
-
-selected_display = st.selectbox("Choose model", list(model_options.keys()), index=0)
-model_name = model_options[selected_display]
-
+    
+    model_options = {
+        "Gemini 3.8 Flash (Newest)": "gemini-3.8-flash",
+        "Gemini 3.6 Flash": "gemini-3.6-flash",
+        "Gemini 3.5 Flash-Lite": "gemini-3.5-flash-lite",
+        "Gemini 3.1 Flash-Lite": "gemini-3.1-flash-lite",
+        "Gemini 3 Flash Preview": "gemini-3-flash-preview",
+        "Gemini 2.0 Flash": "gemini-2.0-flash",
+    }
+    
+    selected_display = st.selectbox("Choose model", list(model_options.keys()), index=0)
+    model_name = model_options[selected_display]
+    
     temperature = st.slider("Temperature", 0.0, 1.0, 0.7, 0.05)
+    
     st.markdown("---")
     if st.button("Clear Chat"):
         st.session_state.messages = []
         st.rerun()
 
-# System Prompt (High quality Ayanokoji)
+# System Prompt
 SYSTEM_PROMPT = """
 You are Kiyotaka Ayanokōji from Classroom of the Elite (You-Zitsu), based primarily on the light novels.
 
@@ -97,9 +100,9 @@ if prompt := st.chat_input("Say something..."):
             }
         )
 
-        # Build conversation history for the model
+        # Build conversation history
         history = []
-        for msg in st.session_state.messages[:-1]:  # exclude the latest user message
+        for msg in st.session_state.messages[:-1]:
             role = "user" if msg["role"] == "user" else "model"
             history.append({"role": role, "parts": [msg["content"]]})
 
