@@ -14,11 +14,17 @@ with st.sidebar:
     api_key = st.text_input("Gemini API Key", type="password", placeholder="Paste your API key here")
     st.markdown("---")
     st.markdown("**Model**")
-    model_name = st.selectbox(
-        "Choose model",
-        ["gemini-2.0-flash", "gemini-2.5-flash", "gemini-1.5-flash"],
-        index=0
-    )
+model_options = {
+    "Gemini 3.8 Flash (Newest)": "gemini-3.8-flash",
+    "Gemini 3.6 Flash": "gemini-3.6-flash",
+    "Gemini 3.5 Flash-Lite": "gemini-3.5-flash-lite",
+    "Gemini 3.1 Flash-Lite": "gemini-3.1-flash-lite",
+    "Gemini 3 Flash Preview": "gemini-3-flash-preview",
+    "Gemini 2.0 Flash": "gemini-2.0-flash",
+}
+
+selected_display = st.selectbox("Choose model", list(model_options.keys()), index=0)
+model_name = model_options[selected_display]
     temperature = st.slider("Temperature", 0.0, 1.0, 0.7, 0.05)
     st.markdown("---")
     if st.button("Clear Chat"):
